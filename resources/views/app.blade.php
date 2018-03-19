@@ -37,9 +37,11 @@ session_start();
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
+                    @if(session()->get( 'result' )->role == 1)
                     <li>
                         <a class="navbar-brand" href="{{ url('/user') }}"> List User</a>
                     </li>
+                    @endif
                     <li>
                         <a class="navbar-brand" href="{{ url('/course') }}"> List Course</a>
                     </li>

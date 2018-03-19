@@ -34,7 +34,11 @@ class MyController extends Controller {
 	}
 
 	public function user() {
-		return view( 'user', [ 'result' => $this->getApiUser() ] );
+		if ( session()->get( 'result' )->role == 1 ) {
+			return view( 'user', [ 'result' => $this->getApiUser() ] );
+		} else {
+			return redirect( 'course' );
+		}
 	}
 
 	public function course() {
@@ -73,13 +77,15 @@ class MyController extends Controller {
 			],
 		] );
 		$result = json_decode( $res->getBody() )->results;
-		session( [ 'auth' => $result ] );
+		session( [ 'auth' => 'true' ] );
+		session( [ 'result' => $result ] );
 
 		return redirect( '/' );
 	}
 
 	public function logout() {
 		session()->forget('auth');
+		session()->forget('result');
 
 		return redirect( '/login' );
 	}
